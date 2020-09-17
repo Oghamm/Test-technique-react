@@ -1,7 +1,9 @@
 import React from 'react';
 import Page from 'components/Page';
+import Layout from "../../layout";
 
 const Home = () => (
+  <Layout>
   <Page className="Home">
     <h2>Hello&nbsp;!</h2>
     <p>
@@ -67,6 +69,7 @@ const Home = () => (
     </p>
     <p>Merci pour votre temps, bonne chance&nbsp;!</p>
   </Page>
+  </Layout>
 );
 
 export default Home;

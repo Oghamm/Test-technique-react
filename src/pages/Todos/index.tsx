@@ -1,10 +1,16 @@
 import React, {useEffect, useState} from 'react';
 import Page from 'components/Page';
 import Layout from "../../layout";
+import Content from "../../components/Content";
 
 
 function Todos() {
-  function fetchAPI() {
+
+  const [liste, setListe] = useState ([]);
+  const [count, setCount] = useState (0);
+  const [refresh, setRefresh] = useState (false);
+
+  {/*function fetchAPI() {
     fetch('API.json')
       .then( (response) =>
         response.text()
@@ -12,27 +18,25 @@ function Todos() {
       .then((data) =>{
         setListe(JSON.parse(data))
       });
-  }
-
-  const [liste, setListe] = useState <any[]>([])
+  } */}
 
   useEffect(()=>{
-    fetchAPI()
-  },[])
+    fetch('API.json')
+      .then((response) =>response.json())
+      .then((data) => {
+        setListe(data)
+      })
+  },[]);
 
   return(
     <Layout>
       <Page className="Todos">
-        {liste && liste.map((todo,i)=> {
-          return (
-            <li key={i}>
-              <div>{todo.title}</div>
-              <div className={'hidden'}>
-                <div>{todo.content}</div>
-                <button>close</button>
-              </div>
-            </li>)
-        })}
+        <div onClick={() => setRefresh(!refresh)}>{count}</div>
+        <ul>
+          {liste && liste.map((item, i) =>(
+            <Content  key={i} todo={item} refresh={refresh} count={count} onClick={setCount} />
+          ))}
+        </ul>
       </Page>
     </Layout>);
 }
